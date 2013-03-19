@@ -28,14 +28,26 @@ if dest=="":
 		local.write(dest)
 local.close()
 
+filelist = os.listdir(dest)
+currentlist = []
+
 for i in range(10):
 	tree = ET.parse(urllib2.urlopen('http://www.bing.com/HPImageArchive.aspx?format=xml&idx='+str(i)+'&n=1&mkt=en-US'))
 	root = tree.getroot()
 	user_agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.160 Safari/537.22'
 	dlink = str('http://www.bing.com'+root.find('image').find('url').text)
-	dname = str(root.find('image').find('startdate').text)
-	print ('Downloading ' + dname + ' to ' + dest)
-	pic = urllib2.urlopen(urllib2.Request(dlink.replace(" ","%20"),None,{'User-Agent' : user_agent}))
-	output = open(dest+dname+'.jpg','wb+')
-	output.write(pic.read())
-	output.close()
+	dname = str(root.find('image').find('startdate').text+'.jpg')
+	currentlist.append(dname)
+	if dname in filelist:
+			print dname + ' already in directory.'
+	else:
+			print ('Downloading ' + dname + ' to ' + dest)
+			pic = urllib2.urlopen(urllib2.Request(dlink.replace(" ","%20"),None,{'User-Agent' : user_agent}))
+			output = open(dest+dname,'wb+')
+			output.write(pic.read())
+			output.close()
+
+for imgfile in filelist:
+		if imgfile not in currentlist:
+				os.remove(dest+imgfile)
+print 'update successfully.'
