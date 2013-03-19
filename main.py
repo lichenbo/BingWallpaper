@@ -26,6 +26,7 @@ if dest=="":
 		if dest[-1] != '/' and dest[-1] != '\\':
 				dest+='/'
 		local.write(dest)
+print 'Your current image library is at '+ dest+'. Please run this program with parameter `-clear` to reset the location'
 local.close()
 
 filelist = os.listdir(dest)
