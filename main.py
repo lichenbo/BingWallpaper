@@ -36,7 +36,7 @@ for i in range(10):
 	root = tree.getroot()
 	user_agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.160 Safari/537.22'
 	try:
-	dlink = str('http://www.bing.com'+root.find('image').find('url').text)
+			dlink = str('http://www.bing.com'+root.find('image').find('url').text)
 	except urllib2.URLError as exception:
 			print 'cannot find xml file, check your internet connection'
 	dname = str(root.find('image').find('startdate').text+'.jpg')
@@ -47,7 +47,7 @@ for i in range(10):
 			print ('Downloading ' + dname + ' to ' + dest)
 			pic = urllib2.urlopen(urllib2.Request(dlink.replace(" ","%20"),None,{'User-Agent' : user_agent}))
 			try:
-			output = open(dest+dname,'wb+')
+					output = open(dest+dname,'wb+')
 			except urllib2.URLError as exception:
 					print 'cannot find jpg file, check your internet connection'
 			output.write(pic.read())
