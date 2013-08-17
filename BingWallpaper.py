@@ -1,3 +1,7 @@
+# Author: Chenbo Li, http://www.binarythink.net
+# Description: The code is to download the background images of bing.com of last 10 days as wallpaper for windows 7. 
+# It automatically renew the entire pictures directory with exactly 10 pictures up-to-date.
+# Configs are written in config.dat which shares the same directory with BingWallpaper.py.
 import xml.etree.ElementTree as ET
 import urllib2
 import os
@@ -35,6 +39,7 @@ currentlist = []
 for i in range(10):
 	tree = ET.parse(urllib2.urlopen('http://www.bing.com/HPImageArchive.aspx?format=xml&idx='+str(i)+'&n=1&mkt=en-US'))
 	root = tree.getroot()
+	# add user_agent in case the Bing site detects the robot.
 	user_agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.160 Safari/537.22'
 	try:
 			dlink = str('http://www.bing.com'+root.find('image').find('url').text)
