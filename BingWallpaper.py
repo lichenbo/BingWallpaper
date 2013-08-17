@@ -1,13 +1,15 @@
 # Author: Chenbo Li, http://www.binarythink.net
 # Description: The code is to download the background images of bing.com of last 10 days as wallpaper for windows 7. 
 # It automatically renew the entire pictures directory with exactly 10 pictures up-to-date.
-# Configs are written in config.dat which shares the same directory with BingWallpaper.py.
+# Configs are written in config.dat which shares the same directory with BingWallpaper.py or BingWallpaper.exe.
 import xml.etree.ElementTree as ET
 import urllib2
 import os
 import errno
 import sys
+import Tkinter
 
+top = Tkinter.Tk()
 if len(sys.argv) > 1 and sys.argv[1] == '-clear':
 	try:
 		os.remove('config.dat')
@@ -36,6 +38,7 @@ local.close()
 filelist = os.listdir(dest)
 currentlist = []
 
+# get the last 10 xml files.
 for i in range(10):
 	tree = ET.parse(urllib2.urlopen('http://www.bing.com/HPImageArchive.aspx?format=xml&idx='+str(i)+'&n=1&mkt=en-US'))
 	root = tree.getroot()
@@ -63,3 +66,10 @@ for imgfile in filelist:
 		if imgfile not in currentlist:
 				os.remove(dest+imgfile)
 print 'update successfully.'
+def main():
+		checkPath()
+		path = getPath()
+		downloadFiles()
+
+if __name__ == '__main__':
+		main()
